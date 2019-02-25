@@ -197,10 +197,10 @@
   }
   //  mutations 执行共享数据的修改操作
   const mutations = {
-    increment: ({ state, params }) => {
+    increment: (state, params) => {
       state.count += params
     },
-    decrement: ({ state }) => {
+    decrement: (state) => {
       state.count --
     }
   }
