@@ -2,6 +2,15 @@
 
 ## Vue基础
 
+- 环境搭建
+
+```
+- 脚手架版本 3.0.1  npm install @vue-cli@3.0.1
+- 课程vue版本 2.5(我的版本3.0.1)
+- 使用cli创建vue项目 npm create project_mt
+- 启动项目  npm run serve
+```
+
 - 模板语法 
   + {{}} / v-text     文本
   + v-html            原始html
@@ -320,7 +329,7 @@
   }).$mount('#app')
   ```
   ```html
-  <!-- 基本使用 -->
+  <!-- 使用 -->
   <template>
     <div class="pageA">
       <h1>这里是pageA组件</h1>
@@ -349,14 +358,174 @@
   ```
 
 ## Koa2 基础
+- 快速步骤
+  ```
+  npm i -g koa-generator  -->   下载 koa-genderator
+  koa2 -e koa2-learn      -->   创建以ejs引擎的koa项目文件
+  cd koa2-learn           -->   进入目录
+  npm install             -->   下载依赖
+  npm run dev             -->   启动项目
+  ```
+
+- async await / promise
+  ```js
+  router.get('/', async (ctx, next) => {
+    const res = await new Promise((resolve, reject)=>{
+      console.log('--------- console')
+      setTimeout(() => {
+        console.log('setTimeout 1000ms console')
+        resolve('promise resolve ....')
+      },1000)
+    })
+    const b = await 'b';
+    const c = await Promise.resolve('c')
+    ctx.body = {
+      res,
+      b,
+      c
+    }
+  })
+  ```
+- 中间件
+  ```js
+  function pv(ctx) {
+    console.log('console path 的中间件----',ctx.path)
+  }
+  
+  module.exports = function() {
+    return async function(ctx, next){
+      pv(ctx)
+      await next()
+    }
+  } 
+  ```
+
+- koa-router
+  ```js
+  //  一个用户相关操作的路由模块
+  const router = require('koa-router')()
+  router.prefix('/users')
+  router('/',(ctx,next) => {
+    ctx.body='this is a users response'
+  })
+  router('/bar',(ctx,next)=>{
+    ctx.body = 'this is a users/bar response'
+  })
+  module.exports = router
+  ```
+  ```js
+  //  混合操作路由模块
+  const router = require('koa-router')()
+  //  访问/json,返回一个json信息
+  router.get('/json',async(ctx,next)=>{
+    ctx.body = {
+      title: 'koa2 json'
+    }
+  })
+  //  访问/testAsync, 返回一个经过 ejs 模板引擎处理后的 html 文件
+  router.get('/testAsync',async(ctx,next)=>{
+    await ctx.render('index',{
+      title: 'hello index.ejs'
+    })
+  })
+  module.exports = router
+  ```
+  ```js
+  //  app.js
+  //  引入路由
+  const index = require('./routes/index')
+  const users = require('./routes/users')
+  //  使用路由  
+  app.use(index.routes(), index.allowedMethods())
+  app.use(users.routes(), users.allowedMethods())
+  ```
+
+- cookie 和 session
+  + cookie
+    - 写  `ctx.cookies.set('cookieName', 'cookieValue')`
+    - 读  `ctx.cookies.get('cookieName')`
+  + session
+
+## mongodb
+- mongodb
+  + 安装
+  + 启动 `mongod`
+  + 可视化工具使用  **Robo 3T** 
+
+- mongoose
+  + Schema
+  + Model
+  ```js
+  //  模块化中的各个Schema模块如此
+  const mongoose = require('mongoose')
+  const PersonSchema = new mongoose.Schema({ name: String, age: Number })
+  module.exports = mongoose.modle('Person', PersonSchema)
+  ```
+  ```js
+  //  连接数据库
+  const mongoose = require('mongoose')
+  mongoose.connect('mongodb://127.0.0.1/dbs_mt', {
+    useNewUrlParser: true
+  })
+  mongoose.connection.once('open', () => {
+    console.log('数据库连接成功')
+  })
+  ```
+  ```js
+  //  基本操作
+  const Person = require('/models/dns/person.js')
+  //  添加
+  router.get('/addPerson', async (ctx) => {
+    /* Person.create({
+      name: ctx.query.name
+    }, (err, data) => {
+      if (!err) {
+        console.log(data)
+      } else {
+        console.log('插入失败')
+      }
+    }) */
+    const res = await new Person({
+      name: ctx.query.name
+    }).save()
+    let code;
+    if (res) {
+      code = 0
+    } else {
+      code = -1
+    }
+    ctx.body = {
+      code,
+      data: res
+    }
+  })
+
+  //  查询
+  router.get('/getPerson', async (ctx) => {
+    let code
+    const res = await Person.find({})
+    if (res) {
+      code = 0
+    } else {
+      code = -1
+    }
+    ctx.body = {
+      code,
+      data: res
+    }
+  })
+
+  //  改
+  //    Model.update(coditions, doc[,options][,callback])
+  //  删
+  //    Model.deleteOne()
+  ```
+
+## redis  
+**快速读写数据库** 可用于session存储
+- 概念&安装
+- 应用场景
+- 用法
 
 
-
-## 环境搭建
-
-- 脚手架版本 3.0.1  `npm install @vue-cli@3.0.1`
-- 课程vue版本 2.5(我的版本3.0.1)
-
-- 使用cli创建vue项目 `npm create project_mt`
-- 启动项目  `npm run serve`
 
