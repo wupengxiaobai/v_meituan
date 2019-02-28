@@ -79,4 +79,26 @@ router.get('/getPerson', async (ctx) => {
     data: res
   }
 })
+
+
+router.get('/updatePerson', async (ctx)=>{
+    const res = await Person.where({
+        name:'"小白"'
+    }).update({
+        name:'大白菜'
+    })
+    console.log(res)
+
+    ctx.body = res?{code:0}:{code:1}
+})
+
+router.get('/removePerson',async (ctx)=>{
+    const res = await Person.where({
+        name: ctx.query.name
+    }).remove()
+
+    console.log(res)
+    ctx.body = res?{code:0}:{code:1}
+})
+
 module.exports = router
