@@ -1,11 +1,10 @@
 <template>
   <el-container>
-    <el-header>
-        <my-header></my-header>    
+    <el-header class="el-header">
+      <my-header></my-header>
     </el-header>
     <el-main>
-        
-    <nuxt/>
+      <nuxt/>
     </el-main>
     <el-footer>Footer</el-footer>
   </el-container>
@@ -23,5 +22,8 @@ export default {
 
 
 <style lang="less" scoped>
+.el-header {
+  height: auto!important;
+}
 </style>
 

@@ -1,17 +1,14 @@
 <template>
   <div class="topBar">
     <div class="container">
-        
       <div class="left">
         <!-- 城市服务 -->
         <geo/>
         <!-- 用户操作 -->
         <user/>
-
       </div>
       <!-- 右侧导航 -->
       <tnav/>
-
     </div>
   </div>
 </template>
@@ -31,6 +28,8 @@ export default {
 
 <style lang="less" scoped>
 .topBar {
+  position: relative;
+  z-index: 1;
   width: 100%;
   line-height: 40px;
   height: 40px;
@@ -40,8 +39,9 @@ export default {
   .container {
     display: flex;
     justify-content: space-between;
-    .left{
-        display: flex;
+    .left {
+      width: 400px;  
+      display: flex;
     }
   }
 }

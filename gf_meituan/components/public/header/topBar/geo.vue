@@ -25,6 +25,6 @@ export default {};
     &:hover {
       color: @mColor;
     }
-  } // color: @mColor;
+  }
 }
 </style>
