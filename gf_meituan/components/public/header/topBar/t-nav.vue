@@ -158,6 +158,9 @@ export default {
       }
       &:nth-of-type(3) {
         border-radius: 0;
+        dl{
+            background: #fff;
+        }
         &:hover {
           &::after {
             position: absolute;

@@ -23,7 +23,12 @@ export default {
 
 <style lang="less" scoped>
 .el-header {
-  height: auto!important;
+  height: auto !important;
+}
+.el-main {
+  overflow: inherit;
+  padding: 10px 20px;
+  background: #f8f8f8;
 }
 </style>
 

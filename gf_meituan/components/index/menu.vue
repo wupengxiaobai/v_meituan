@@ -1,35 +1,33 @@
 <template>
-  <div class="container">
-    <div class="menu">
-      <dl class="menu-wrapper">
-        <dt>全部分类</dt>
-        <dd
-          @mouseenter="menuenter(item)"
-          @mouseleave="menuleave"
-          v-for="(item,index) in menu"
-          :key="index"
-        >
-          <span>
-            <i class="el-icon-goods"></i>
-            {{item.name}}
-          </span>
-          <i class="el-icon-arrow-right"></i>
-        </dd>
-      </dl>
-      <div
-        @mouseenter="detailShow=true"
-        @mouseleave="detailShow=false"
-        v-show="detailShow"
-        class="menu-detail"
+  <div class="menu">
+    <dl class="menu-wrapper">
+      <dt>全部分类</dt>
+      <dd
+        @mouseenter="menuenter(item)"
+        @mouseleave="menuleave"
+        v-for="(item,index) in menu"
+        :key="index"
       >
-        <div v-for="(item,index) in currentSelectMenuItem.children" :key="index" class="menu-item">
-          <div class="title">
-            <span>{{ item.title }}</span>
-            <span>更多</span>
-          </div>
-          <div class="cont">
-            <span v-for="(subItem,subIndex) in item.sub" :key="subIndex">{{ subItem.name }}</span>
-          </div>
+        <span>
+          <i class="el-icon-goods"></i>
+          {{item.name}}
+        </span>
+        <i class="el-icon-arrow-right"></i>
+      </dd>
+    </dl>
+    <div
+      @mouseenter="detailShow=true"
+      @mouseleave="detailShow=false"
+      v-show="detailShow"
+      class="menu-detail"
+    >
+      <div v-for="(item,index) in currentSelectMenuItem.children" :key="index" class="menu-item">
+        <div class="title">
+          <span>{{ item.title }}</span>
+          <span>更多</span>
+        </div>
+        <div class="cont">
+          <span v-for="(subItem,subIndex) in item.sub" :key="subIndex">{{ subItem.name }}</span>
         </div>
       </div>
     </div>
@@ -251,7 +249,6 @@ export default {
   methods: {
     //    菜单移入
     menuenter(item) {
-      console.log(item);
       this.detailShow = true;
       this.currentSelectMenuItem = item;
     },
@@ -269,6 +266,8 @@ export default {
 @mmColor: #9f9999;
 .menu {
   position: relative;
+  margin-top: -70px;
+  flex: 0 0 230px;
   width: 230px;
   color: #fff;
   background: -webkit-linear-gradient(
@@ -298,13 +297,13 @@ export default {
   }
   .menu-detail {
     position: absolute;
-    top: 60px;
+    bottom: 0;
     left: 230px;
     padding: 20px;
     width: 400px;
     height: 416px;
     color: @mmColor;
-    background-color: pink;
+    background-color: #ffffff;
     overflow: hidden;
     z-index: 199;
     box-sizing: border-box;
@@ -313,14 +312,20 @@ export default {
       .title {
         display: flex;
         justify-content: space-between;
-        border-bottom: 1px solid #fff;
+        border-bottom: 1px solid @mmColor;
         padding-bottom: 10px;
         margin-bottom: 20px;
+        font-size: 16px;
       }
       .cont {
         span {
           color: @mmColor;
           margin: 0 5px;
+          font-size: 12px;
+          cursor: pointer;
+          &:hover {
+            color: @mColor;
+          }
         }
       }
     }
