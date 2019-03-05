@@ -6,16 +6,20 @@
     <el-main>
       <nuxt/>
     </el-main>
-    <el-footer>Footer</el-footer>
+    <el-footer>
+        <my-footer></my-footer>
+    </el-footer>
   </el-container>
 </template>
 
 
 <script>
 import myHeader from "../components/public/header/Header.vue";
+import myFooter from "../components/public/footer/footer.vue"
 export default {
   components: {
-    myHeader
+    myHeader,
+    myFooter
   }
 };
 </script>
@@ -28,6 +32,10 @@ export default {
 .el-main {
   overflow: inherit;
   padding: 10px 20px;
+  background: #f8f8f8;
+}
+.el-footer{
+  height: auto !important;
   background: #f8f8f8;
 }
 </style>

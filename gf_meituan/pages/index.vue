@@ -11,6 +11,14 @@
       <!-- 焦点区域 -->
       <my-s></my-s>
     </section>
+
+
+    <!-- 其他信息 -->
+    <section class="sn">
+        <!-- 其他信息 -->
+        <last-info></last-info>
+    </section>
+    
   </div>
 </template>
 
@@ -18,11 +26,13 @@
 import myMenu from "@/components/index/menu.vue";
 import myBanner from "@/components/index/banner.vue";
 import myS from "@/components/index/s.vue";
+import lastInfo from "@/components/index/lastinfo.vue"
 export default {
   components: {
     myMenu,
     myBanner,
-    myS
+    myS,
+    lastInfo
   }
 };
 </script>
@@ -30,7 +40,5 @@ export default {
 <style scoped lang='less'>
 .s1 {
   display: flex;
-}
-.s2 {
 }
 </style>
