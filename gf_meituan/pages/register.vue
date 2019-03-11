@@ -14,7 +14,7 @@
         <el-input v-model="ruleForm.email" placeholder="填写邮箱"></el-input>
       </el-form-item>
       <el-form-item label="邮箱验证">
-        <el-button type="default" size="small">发送验证</el-button>
+        <el-button @click="sendVerifyCode" type="default" size="small">发送验证</el-button>
       </el-form-item>
       <el-form-item label="短信验证码" prop="verify">
         <el-input v-model="ruleForm.verify" placeholder="填写验证码"></el-input>
@@ -120,13 +120,51 @@ export default {
         ],
         delivery: [{ validator: agreementVerify, trigger: "blur" }]
       },
-      disable: true
+      disable: true,
+      statusMsg: "",
+      timerid: null
     };
   },
   methods: {
     //   提交
-    submitForm() {
-
+    sendVerifyCode() {
+      const self = this;
+      let namePass;
+      let emailPass;
+      if (self.timerid) {
+        return false;
+      }
+      this.$refs["roleForm"].validateField("name", valid => {
+        namePass = valid;
+      });
+      self.statusMsg = "";
+      if (namePass) {
+        return false;
+      }
+      this.$$refs["roleForm"].validateField("email", valid => {
+        emailPass = valid;
+      });
+      if (!namePass && !emailPass) {
+        self.$axios
+          .post("/users/verify", {
+            username: encodeURIComponent(self.ruleForm.name),
+            email: self.ruleForm.email
+          })
+          .then(({ status, data }) => {
+            if (status === 200 && data && data.code === 0) {
+              let count = 60;
+              self.statusMsg = `验证码已发送, 剩余 ${count--}秒`;
+              self.timerid = setInterval(function() {
+                self.statusMsg = `验证码已发送, 剩余 ${count--}秒`;
+                if (count === 0) {
+                  clearInterval(self.timerid);
+                }
+              }, 1000);
+            } else {
+              self.statusMsg = data.msg;
+            }
+          });
+      }
     }
   },
   components: {}

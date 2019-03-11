@@ -54,7 +54,15 @@ module.exports = {
   /*
    ** Nuxt.js modules 在该处定义的模块会被直接挂载到 vue 的实例上
    */
-  modules: [],
+  modules: [
+    // '@nuxtjs/axios'
+  ],
+
+
+  /**
+   * axios module configuration
+   */
+  axios: {},
 
   /*
    ** Build configuration
